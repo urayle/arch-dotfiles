@@ -1,0 +1,21 @@
+#!/bin/sh
+# Interactively prints the battery status
+
+batcap=$(cat /sys/class/power_supply/BAT0/capacity)
+batstat=$(cat /sys/class/power_supply/BAT0/status)
+
+if [[ "$batstat" = "Charging" ]]; then
+    baticon=""
+elif [[ $batcap -ge 92 ]]; then
+    baticon=""
+elif [[ $batcap -ge 70 ]]; then
+    baticon=""
+elif [[ $batcap -ge 35 ]]; then
+    baticon=""
+elif [[ $batcap -ge 15 ]]; then
+    baticon=""
+else
+    baticon=""
+fi
+
+echo "$baticon  $batcap%"

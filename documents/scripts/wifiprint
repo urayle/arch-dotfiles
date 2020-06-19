@@ -1,0 +1,14 @@
+#!/bin/sh
+# Interactively prints the Wi-Fi status
+
+wifistat=$(nmcli -t device status | grep wifi | cut -f 3 -d ':')
+wifitext=""
+wifiicon=""
+
+if [[ "$wifistat" = "unavailable" ]]; then
+    wifiicon=""
+elif [[ "$wifistat" = "connected" ]]; then
+    wifitext="  $(nmcli -t device status | grep wifi | cut -f 4 -d ':' | cut -f 1 -d '-')"
+fi
+
+echo "$wifiicon${wifitext^}"
