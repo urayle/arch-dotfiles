@@ -1,0 +1,19 @@
+
+# Colouring for autocomplete
+set colored-stats on
+
+# Set vi mode for bash, R, etc
+set editing-mode vi
+set show-mode-in-prompt on
+set vi-cmd-mode-string "\1\e[2 q\2"
+set vi-ins-mode-string "\1\e[6 q\2"
+
+# Reduce delay in switching between modes
+set keyseq-timeout 5
+
+# Miscellaneous commands
+"\C-l":clear-screen
+"\C-p":previous-history
+"\C-n":next-history
+"\C-a":beginning-of-line
+"\C-e":end-of-line

@@ -1,0 +1,125 @@
+#                        _      _        _  __          
+#  _   _ _ __ __ _ _   _| | ___( )___   | |/ _|_ __ ___ 
+# | | | | '__/ _` | | | | |/ _ \// __|  | | |_| '__/ __|
+# | |_| | | | (_| | |_| | |  __/ \__ \  | |  _| | | (__ 
+#  \__,_|_|  \__,_|\__, |_|\___| |___/  |_|_| |_|  \___|
+#                  |___/                                
+
+# Set colour of prompt
+
+set color256 on
+set promptfmt "\033[1;38;5;3m%u\033[1;38;5;138m:\033[1;38;5;174m%h\033[1;38;5;252m:\033[1;38;5;4m%w/\033[1;38;5;15m%f\033[0m"
+
+# Basic functions
+
+cmd trash $IFS="`printf '\n\t'`"; mv $fx ~/trash
+
+cmd copy_latex_assignment_template ${{
+    cp ~/documents/templates/assignment-template.tex .
+}}
+
+cmd copy_rmd_template ${{
+    cp ~/documents/templates/rmd-template.Rmd .
+}}
+
+cmd copy_file_path ${{
+    echo $fx | xclip -selection "clipboard" -r
+}}
+
+cmd copy_file_name ${{
+    echo $(basename $fx) | xclip -selection "clipboard" -r
+}}
+
+cmd copy_dir_path ${{
+    echo $(dirname $fx) | xclip -selection "clipboard" -r
+}}
+
+cmd wd_payload ${{
+    echo "cd $(pwd); clear" | xclip -selection "clipboard"
+}}
+
+cmd rename-insert &{{
+    if [ "$(echo "$fx" | wc -l)" -gt 1 ]; then
+        lf -remote "send $id echo You can't change more than one file name"
+        lf -remote "send $id unselect"
+    else
+        len="$(basename "$f" | wc -m)" # length of selected file/directory
+        for i in $(seq "$len"); do
+            pos="${pos}<left>" # how many times do I have to press <left> in order to get first char
+        done
+        lf -remote "send $id rename"
+        lf -remote "send $id push $pos"
+    fi
+}}
+
+cmd rename-before-ext &{{
+    if [ "$(echo "$fx" | wc -l)" -gt 1 ]; then
+        lf -remote "send $id echo You can't change more than one file name"
+        lf -remote "send $id unselect"
+    else
+        if [ -d "$f" ]; then
+            lf -remote "send $id rename"
+        else
+            ext_len="$(echo ${f##*.} | wc -m)" # extention length
+            for i in $(seq "$ext_len"); do
+                pos="${pos}<left>"
+            done
+            lf -remote "send $id rename"
+            lf -remote "send $id push "$pos""
+        fi
+    fi
+}}
+
+cmd rename-new &{{
+    if [ "$(echo "$fx" | wc -l)" -gt 1 ]; then
+        lf -remote "send $id echo You can't change more than one file name"
+        lf -remote "send $id unselect"
+    else
+        lf -remote "send $id rename"
+        lf -remote "send $id push <c-u>"
+    fi
+}}
+
+cmd fzf_jump ${{
+   # res="$(find . ! -path '*r-packages*' | fzf --reverse --header='Jump to location')"
+   res="$(fzf --header='Jump to file')"
+   if [ -f "$res" ]; then
+     cmd="select"
+   elif [ -d "$res" ]; then
+     cmd="cd"                                                       
+   fi
+lf -remote "send $id $cmd \"$res\""
+}}
+
+# Setting up mappings
+
+map n
+map r
+
+map af push %touch<space>
+map ad push %mkdir<space>
+
+map D trash
+map X delete
+
+map ta copy_latex_assignment_template
+map tr copy_rmd_template
+
+map nf copy_file_name
+map nF copy_file_path
+map nd copy_dir_path
+map nw wd_payload
+map <c-n> search-next
+map <c-p> search-prev
+
+map re rename-before-ext
+map rc rename-new
+map ri rename-insert
+map rr rename
+
+map gd cd ~/downloads
+map gt cd ~/trash
+map gs cd ~/pictures/screenshots
+
+map f
+map ff :fzf_jump
