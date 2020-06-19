@@ -19,7 +19,7 @@ export VISUAL="vim"
 export EDITOR="$VISUAL"
 export TERMINAL="st"
 export BROWSER="brave"
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore r-packages -g ""'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore r-packages --ignore arch-dotfiles -g ""'
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 
 # Clean-up with XDG base specifications

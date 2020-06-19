@@ -80,7 +80,6 @@ nnoremap <silent> <Space>m :cclose<CR>
 " Guide navigation
 noremap <silent> <Space><Space> <Esc>/<++><CR>c4l
 inoremap <silent> ;; <Esc>/<++><CR>c4l
-" nnoremap <Space>; ;
 
 " LaTeX compilation and previewing
 autocmd Filetype tex set makeprg=texfot\ --quiet\ pdflatex\ %
