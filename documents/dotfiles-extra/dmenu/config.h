@@ -1,1 +1,0 @@
-/home/urayle/programs/dmenu/config.h

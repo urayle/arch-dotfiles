@@ -1,1 +1,0 @@
-/home/urayle/programs/dwm/config.h
