@@ -1,0 +1,1 @@
+/home/urayle/programs/st/config.h
