@@ -1,6 +1,7 @@
 setxkbmap -option caps:escape
 xinput disable "SynPS/2 Synaptics TouchPad"
 xset r rate 200 30
+xrdb ~/.Xresources
 xwallpaper --zoom ~/pictures/wallpapers/cliff.jpg
 
 redshift -O 9150

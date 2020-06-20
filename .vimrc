@@ -62,10 +62,6 @@ set tabstop=4
 
 " Split preferences
 set splitbelow splitright
-nmap <silent> <C-k> <C-w>k
-nmap <silent> <C-j> <C-w>j
-nmap <silent> <C-h> <C-w>h
-nmap <silent> <C-l> <C-w>l
 
 " Directory payload
 nmap <silent> <Space>w :let @+ = "cd " . expand('%:p:h') . "; clear\n"<CR>
